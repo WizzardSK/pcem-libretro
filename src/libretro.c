@@ -541,6 +541,9 @@ static void check_variables(bool first_time_startup)
       }
       else
          cpu_use_dynarec = 0;
+#ifdef PCEM_NO_DYNAREC
+      cpu_use_dynarec = 0;   /* no recompiler for this host */
+#endif
 
       var.key = "pcem_video_timing_speed";
 
@@ -1057,6 +1060,7 @@ bool retro_load_game(const struct retro_game_info *info)
 void retro_unload_game(void)
 {
    closepc();
+   sound_close();
 
    midi_close();
 }
